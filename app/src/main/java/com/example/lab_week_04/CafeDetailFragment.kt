@@ -18,31 +18,49 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 private const val TAB_CONTENT = "TAB_CONTENT"
+
 class CafeDetailFragment : Fragment() {
-    private var content: String? = null
+
+    private var titleResId: Int? = null
+    private var descriptionResId: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            content = it.getString(TAB_CONTENT)
+            titleResId = it.getInt(ARG_TITLE)
+            descriptionResId = it.getInt(ARG_DESCRIPTION)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-// Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cafe_detail, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.content_description)
-            ?.text = content
+        // Assuming you have TextViews in fragment_cafe_detail for title and description
+        val titleTextView = view.findViewById<TextView>(R.id.title_text_view)
+        val descriptionTextView = view.findViewById<TextView>(R.id.description_text_view)
+
+        titleTextView.text = titleResId?.let { getString(it) }
+        descriptionTextView.text = descriptionResId?.let { getString(it) }
     }
+
     companion object {
-        fun newInstance(content: String) =
+        private const val ARG_TITLE = "title"
+        private const val ARG_DESCRIPTION = "description"
+
+        // Use this method to pass data to the fragment
+        @JvmStatic
+        fun newInstance(titleResId: Int, descriptionResId: Int) =
             CafeDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(TAB_CONTENT, content)
+                    putInt(ARG_TITLE, titleResId)
+                    putInt(ARG_DESCRIPTION, descriptionResId)
                 }
             }
     }
