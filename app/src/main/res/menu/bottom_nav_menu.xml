@@ -7,6 +7,6 @@
     <item
         android:id="@+id/cafeFragment"
         android:icon="@drawable/cafe"
-        android:title="@string/bottom_menu_coffee"/>
+        android:title="@string/bottom_menu_cafe"/>
 
 </menu>
